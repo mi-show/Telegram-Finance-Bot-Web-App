@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Finance Web App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/webapp/assets/styles.css" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  </head>
+  <body class="theme-dark">
+    <div class="app-bg app-bg-a"></div>
+    <div class="app-bg app-bg-b"></div>
+
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Telegram Finance</p>
+        <h1 class="title">Personal Control Center</h1>
+      </div>
+      <button class="ghost-btn" id="refreshAllBtn" type="button">Refresh</button>
+    </header>
+
+    <main class="content">
+      <section class="period-switch" id="periodSwitch">
+        <button data-period="7d" type="button">7D</button>
+        <button data-period="30d" class="active" type="button">30D</button>
+        <button data-period="90d" type="button">90D</button>
+        <button data-period="month" type="button">Month</button>
+        <button data-period="year" type="button">Year</button>
+      </section>
+
+      <section id="page-dashboard" class="page active">
+        <div class="cards-grid">
+          <article class="metric-card">
+            <p>Balance</p>
+            <h3 id="cardBalance">0.00</h3>
+          </article>
+          <article class="metric-card">
+            <p>Income</p>
+            <h3 id="cardIncome">0.00</h3>
+          </article>
+          <article class="metric-card">
+            <p>Expense</p>
+            <h3 id="cardExpense">0.00</h3>
+          </article>
+          <article class="metric-card">
+            <p>Remaining</p>
+            <h3 id="cardRemaining">0.00</h3>
+          </article>
+        </div>
+
+        <div class="charts-grid">
+          <article class="panel dash-block" data-block="dashboardPie">
+            <div class="panel-head">
+              <h3>Expense by Categories</h3>
+            </div>
+            <canvas id="categoryPie"></canvas>
+          </article>
+
+          <article class="panel dash-block" data-block="dashboardLine">
+            <div class="panel-head">
+              <h3>Income vs Expense Trend</h3>
+            </div>
+            <canvas id="trendLine"></canvas>
+          </article>
+
+          <article class="panel dash-block" data-block="dashboardBar">
+            <div class="panel-head">
+              <h3>Category Comparison</h3>
+            </div>
+            <canvas id="categoryBar"></canvas>
+          </article>
+        </div>
+
+        <article class="panel dash-block" data-block="dashboardRecent">
+          <div class="panel-head">
+            <h3>Recent Operations</h3>
+          </div>
+          <div id="recentOperations" class="recent-list"></div>
+        </article>
+      </section>
+
+      <section id="page-operations" class="page">
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Operations</h3>
+            <div class="inline-actions">
+              <button class="ghost-btn" id="exportCsvBtn" type="button">Export CSV</button>
+              <button class="ghost-btn" id="exportPdfBtn" type="button">Export PDF</button>
+            </div>
+          </div>
+
+          <form id="filtersForm" class="filters-form">
+            <input type="date" id="filterDateFrom" />
+            <input type="date" id="filterDateTo" />
+            <select id="filterType">
+              <option value="">Type</option>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+            <select id="filterCategory">
+              <option value="">Category</option>
+            </select>
+            <input type="number" id="filterMin" placeholder="Min" step="0.01" min="0" />
+            <input type="number" id="filterMax" placeholder="Max" step="0.01" min="0" />
+            <input type="text" id="filterQuery" placeholder="Search by text" />
+            <button class="ghost-btn" type="submit">Apply</button>
+            <button class="ghost-btn" id="resetFiltersBtn" type="button">Reset</button>
+          </form>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Source</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="recordsBody"></tbody>
+            </table>
+          </div>
+
+          <div class="centered">
+            <button class="ghost-btn" id="loadMoreRecordsBtn" type="button">Load More</button>
+          </div>
+        </article>
+      </section>
+
+      <section id="page-analytics" class="page">
+        <div class="cards-grid compact">
+          <article class="metric-card">
+            <p>Day Expense</p>
+            <h3 id="analyticsDayExpense">0.00</h3>
+          </article>
+          <article class="metric-card">
+            <p>Week Expense</p>
+            <h3 id="analyticsWeekExpense">0.00</h3>
+          </article>
+          <article class="metric-card">
+            <p>Month Expense</p>
+            <h3 id="analyticsMonthExpense">0.00</h3>
+          </article>
+          <article class="metric-card">
+            <p>Average Expense</p>
+            <h3 id="analyticsAvgExpense">0.00</h3>
+          </article>
+          <article class="metric-card">
+            <p>Max Expense</p>
+            <h3 id="analyticsMaxExpense">0.00</h3>
+          </article>
+          <article class="metric-card">
+            <p>Forecast Next Month</p>
+            <h3 id="analyticsForecast">0.00</h3>
+          </article>
+        </div>
+
+        <div class="charts-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Monthly Comparison</h3>
+            </div>
+            <canvas id="analyticsMonthly"></canvas>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Distribution</h3>
+            </div>
+            <canvas id="analyticsDistribution"></canvas>
+          </article>
+        </div>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Spending Heatmap</h3>
+          </div>
+          <div id="analyticsHeatmap" class="heatmap-grid"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Recommendations</h3>
+          </div>
+          <ul id="recommendationsList" class="tips-list"></ul>
+        </article>
+      </section>
+
+      <section id="page-budget" class="page">
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Monthly Budget</h3>
+          </div>
+
+          <form id="budgetPlanForm" class="grid-form">
+            <label>
+              Start
+              <input type="date" id="budgetStart" required />
+            </label>
+            <label>
+              End
+              <input type="date" id="budgetEnd" required />
+            </label>
+            <label>
+              Planned Expense
+              <input type="number" id="budgetExpense" min="0" step="0.01" required />
+            </label>
+            <label>
+              Planned Income
+              <input type="number" id="budgetIncome" min="0" step="0.01" required />
+            </label>
+            <button class="ghost-btn" type="submit">Save Plan</button>
+          </form>
+
+          <div id="budgetPlanStatus" class="status-text"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Category Limits</h3>
+          </div>
+
+          <div class="inline-form">
+            <select id="limitCategory"></select>
+            <input type="number" id="limitAmount" min="0" step="0.01" placeholder="Limit" />
+            <button class="ghost-btn" id="addLimitBtn" type="button">Add</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Limit</th>
+                  <th>Spent</th>
+                  <th>Remaining</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="limitsBody"></tbody>
+            </table>
+          </div>
+
+          <div class="centered">
+            <button class="ghost-btn" id="saveLimitsBtn" type="button">Save Limits</button>
+          </div>
+        </article>
+      </section>
+
+      <section id="page-settings" class="page">
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Settings</h3>
+          </div>
+
+          <form id="settingsForm" class="grid-form">
+            <label>
+              Theme
+              <select id="settingTheme">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+              </select>
+            </label>
+            <label>
+              Currency
+              <input type="text" id="settingCurrency" maxlength="8" />
+            </label>
+            <label>
+              Interface Language
+              <select id="settingLanguage">
+                <option value="uk">Ukrainian</option>
+                <option value="ru">Russian</option>
+                <option value="en">English</option>
+              </select>
+            </label>
+            <label>
+              Week Starts On
+              <select id="settingWeekStart">
+                <option value="monday">Monday</option>
+                <option value="sunday">Sunday</option>
+              </select>
+            </label>
+            <label class="checkbox-line">
+              <input type="checkbox" id="settingNotifications" />
+              Enable Notifications
+            </label>
+            <label>
+              Hidden Dashboard Blocks (comma-separated)
+              <input type="text" id="settingHiddenBlocks" placeholder="dashboardPie,dashboardLine" />
+            </label>
+            <label>
+              Pinned Filters (comma-separated)
+              <input type="text" id="settingPinnedFilters" />
+            </label>
+            <label>
+              Favorite Categories (comma-separated)
+              <input type="text" id="settingFavoriteCategories" />
+            </label>
+            <button class="ghost-btn" type="submit">Save Settings</button>
+          </form>
+        </article>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button type="button" class="active" data-page="dashboard">Dashboard</button>
+      <button type="button" data-page="operations">Operations</button>
+      <button type="button" data-page="analytics">Analytics</button>
+      <button type="button" data-page="budget">Budget</button>
+      <button type="button" data-page="settings">Settings</button>
+    </nav>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="/webapp/assets/app.js" defer></script>
+  </body>
+</html>

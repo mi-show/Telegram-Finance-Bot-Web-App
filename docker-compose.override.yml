@@ -1,0 +1,20 @@
+
+
+services:
+  finance-bot:
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    environment:
+      - LOG_LEVEL=INFO
+    command: ["-m", "app.bot"]
+
+  finance-web:
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    environment:
+      - LOG_LEVEL=INFO
+    command: ["-m", "app.web_main"]

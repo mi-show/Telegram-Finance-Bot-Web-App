@@ -12,4 +12,4 @@ python-dotenv==1.2.1
 pillow==12.1.1
 pytesseract==0.3.13
 scikit-learn==1.8.0
-rapidfuzz==3.14.1
+rapidfuzz==3.14.5

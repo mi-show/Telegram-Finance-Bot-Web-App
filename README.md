@@ -1,96 +1,158 @@
-# Telegram Finance Bot
+# Telegram Finance Bot + Web App
 
-Асинхронный Telegram‑бот для учёта личных финансов на aiogram 3.
+Languages: [English](README.md) | [Русский](README.ru.md) | [Українська](README.uk.md)
 
-## Возможности
+![Python](https://img.shields.io/badge/Python-3.11-blue) ![aiogram](https://img.shields.io/badge/aiogram-3.x-2c2c2c) ![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688) ![Docker](https://img.shields.io/badge/Docker-ready-2496ED)
 
-- Добавление доходов и расходов с валидацией (Pydantic).
-- Фильтрация записей: даты, категории, тип (income/expense), сумма (min/max), поиск по описанию.
-- Агрегации: суммы по дню/неделе/месяцу, баланс, средний и максимальный расход.
-- Бюджетный план и расчёт остатка.
-- Кэширование дорогих операций.
-- Unit-тесты для основных компонентов.
-- **Новый OCR-поток:** отправьте фото чека → OCR → сумма + магазин → авто‑категория (словарь + ML) → подтверждение перед сохранением.
-- **Telegram Web App:** dashboard, операции, аналитика, бюджет, настройки, экспорт CSV/PDF и редактирование записей внутри мини‑приложения.
+> Async Telegram bot + Web App for personal finance tracking with OCR receipts, smart categorization, budgets, and analytics.
 
-## Быстрый старт (локально)
+![Bot preview](content/бот.jpg)
 
-1. Создайте `.env`:
+## Why this project
 
-```bash
-cp .env.sample .env
-# пропишите BOT_TOKEN и при необходимости DATABASE_URL
+This is a full-stack portfolio project that demonstrates production-grade Python skills:
+
+- async Telegram UX (aiogram) with real user flows
+- FastAPI + PostgreSQL API with SQLAlchemy async
+- OCR pipeline + ML-assisted categorization
+- Web App with charts, exports, and budgets
+- Dockerized stack and automated tests
+
+## Demo
+
+- Video walkthrough: [content/видео_работы.MP4](content/видео_работы.MP4)
+
+## Screenshots
+
+| Dashboard | Operations | Analytics 1 |
+| --- | --- | --- |
+| ![Dashboard](content/дашборд.png) | ![Operations](content/операции.png) | ![Analytics 1](content/аналитка1.png) |
+
+| Budget | OCR | Settings |
+| --- | --- | --- |
+| ![Budget](content/бюджет.png) | ![OCR](content/оср.png) | ![Settings](content/настройки.png) |
+
+| Analytics 2 |
+| --- |
+| ![Analytics 2](content/аналитика2.png) |
+
+## Highlights
+
+- Telegram commands + quick expense input + OCR receipt flow with confirmation
+- Smart categorization: user history -> fuzzy match -> global keywords -> TF-IDF model
+- Budget planning, category limits, forecasts, and recurring payments
+- Analytics dashboard with charts (Chart.js) and exports to CSV/PDF
+- Multi-language UI: `uk`, `ru`, `en`
+- Caching for heavy queries, async DB access
+- OCR quality gates + regression corpus for parser quality
+
+## Tech Stack
+
+- Python 3.11, aiogram 3, FastAPI, SQLAlchemy async
+- PostgreSQL (Docker), SQLite for local dev
+- Tesseract OCR + Pillow, `pytesseract`
+- ML: scikit-learn TF-IDF + rapidfuzz
+- Web App: vanilla JS, Chart.js, Telegram Web App SDK
+- Tests: pytest, pytest-asyncio, Playwright
+
+## Architecture
+
+```mermaid
+flowchart LR
+  subgraph Telegram
+    U[User]
+  end
+  U -->|messages / photos| BOT[finance-bot (aiogram)]
+  BOT -->|SQLAlchemy async| DB[(PostgreSQL)]
+  BOT -->|OCR + parser| OCR[Tesseract + ReceiptParser]
+  BOT -->|menu link| WEBAPP[Telegram Web App]
+
+  WEBAPP -->|API /api/webapp/*| API[finance-web (FastAPI)]
+  API --> DB
+  WEBAPP -->|Charts & UI| UI[Web UI]
 ```
 
-1. Установите зависимости и запустите бота:
+## Core flows
+
+- Quick expense: "coffee 50" -> category suggestion -> save
+- OCR receipts: photo -> OCR -> parse items/amount -> category -> confirm
+- Web App: dashboard, operations, analytics, budget, recurring, settings
+- Exports: CSV + PDF reports
+
+## Quick Start
+
+### Local (pip)
+
+1. Create `.env` (copy from `.env.sample`) and set `BOT_TOKEN` and `DATABASE_URL`.
+1. Install deps:
 
 ```bash
 pip install -r requirements.txt
+```
+
+1. Run bot:
+
+```bash
 python -m app.bot
 ```
 
-1. Запустите Web App API + UI:
+1. Run Web App API + UI:
 
 ```bash
 python -m app.web_main
 ```
 
-## Запуск тестов
+### Docker (full stack)
 
 ```bash
-pip install pytest pytest-asyncio
+docker compose -p finance-bot up -d --build
+```
+
+### One-command dev + tunnel (Windows)
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/start_bot_with_tunnel.ps1
+```
+
+This script:
+
+- starts `db` and `finance-web`
+- waits for `/api/webapp/health`
+- creates a temporary localhost.run tunnel
+- updates `WEBAPP_URL` in `.env`
+- updates the Telegram menu button
+- starts `finance-bot`
+
+## Tests
+
+```bash
 pytest tests/
 ```
 
-## Docker
+### E2E (Playwright)
 
 ```bash
-docker compose -p finance-bot up -d --build    # прод (bot + web + db)
-docker compose -p finance-bot up --build      # разработка с bind-mount
+pip install -r requirements-dev.txt
+python -m playwright install chromium
+pytest tests/e2e/test_webapp_playwright.py -q
 ```
 
-## Команды бота
+## Project structure
 
-- `/start` или `/help` — подсказки + меню‑кнопки.
-- `/add <income|expense> <category> <amount> <YYYY-MM-DD> [note]`
-- `/list [from=YYYY-MM-DD to=YYYY-MM-DD type=expense cat=Food,Taxi min=10 max=200 q=coffee]`
-- `/stats` — баланс, суммы за день/неделю/месяц, средний и максимальный расход.
-- `/budget set <plan_expense> <plan_income> <start> <end>` — сохранить план; без параметров покажет последний или создаст базовый.
-- Отправьте **фото чека** — бот распознает сумму и магазин, предложит категорию (расширенный словарь + ML), спросит подтверждение перед сохранением.
-- Кнопка **Finance Web App** в меню открывает мини‑приложение Telegram Web App.
+- `app/bot.py` Telegram bot entry
+- `app/web_main.py` FastAPI Web App entry
+- `app/services/` OCR, parsing, categorization, aggregation
+- `app/handlers/` bot routes and workflows
+- `app/web/` Web App backend + static UI
+- `tests/` unit + e2e
 
-## Архитектура
+## Docs
 
-- `app/config.py` — настройки из окружения.
-- `app/db.py`, `app/models.py` — SQLAlchemy async (SQLite по умолчанию, готово к Postgres).
-- `app/repositories/records.py` — работа с БД, фильтры, агрегаты, бюджеты.
-- `app/services/record_service.py`, `app/services/aggregation_service.py` — бизнес‑логика и кэш.
-- `app/services/ocr_service.py`, `app/services/receipt_parser.py`, `app/services/category_classifier.py` — OCR и авто‑категоризация чеков.
-- `app/handlers/common.py` — Telegram‑handlers, включая фото чеков с подтверждением.
-- `app/web/app.py`, `app/web/static/*` — FastAPI backend и фронтенд Telegram Web App.
-- `app/cache.py` — простой in-memory кэш с TTL.
-- `tests/` — unit‑тесты.
+- Architecture overview: [BOT_OVERVIEW.md](BOT_OVERVIEW.md)
+- Categorization improvements: [IMPROVEMENTS.md](IMPROVEMENTS.md)
+- OCR quality targets: [OCR_QUALITY_TARGETS.md](OCR_QUALITY_TARGETS.md)
 
-## Переменные окружения (.env)
+## Notes
 
-```dotenv
-BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN
-DATABASE_URL=sqlite+aiosqlite:///./finance.db
-LOG_LEVEL=INFO
-DATE_FORMAT=%Y-%m-%d
-MAX_LIST_RECORDS=100
-CACHE_TTL=300
-WEBAPP_URL=https://your-domain.example/webapp
-WEBAPP_HOST=0.0.0.0
-WEBAPP_PORT=8000
-WEBAPP_INITDATA_TTL=86400
-# для локальной отладки вне Telegram (опционально)
-# WEBAPP_DEV_TELEGRAM_ID=123456789
-```
-
-## Заметки
-
-- Для продакшена замените SQLite на Postgres, обновив `DATABASE_URL`.
-- OCR использует `pytesseract`; убедитесь, что двоичный tesseract доступен в PATH контейнера/хоста.
-- После добавления записей кэш статистики инвалидируется автоматически.
-- Для Telegram Web App укажите публичный `WEBAPP_URL` и добавьте этот URL в настройки кнопки/домена бота в BotFather.
+- For production, use PostgreSQL and configure `WEBAPP_URL`.
+- Tesseract binary must be installed on the host/container.

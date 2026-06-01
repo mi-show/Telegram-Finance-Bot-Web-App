@@ -13,10 +13,14 @@ class RecordService:
         self.repo = RecordRepository(session)
         self.telegram_id = telegram_id
 
-    async def add(self, data: RecordCreate):
+    async def add(self, data: RecordCreate, *, allow_duplicate: bool = False):
         logger.info(f"RecordService.add() called for telegram_id={self.telegram_id}")
         try:
-            record = await self.repo.add_record(self.telegram_id, data)
+            record = await self.repo.add_record(
+                self.telegram_id,
+                data,
+                allow_duplicate=allow_duplicate,
+            )
             logger.info(f"Record successfully added: id={record.id}")
             return record
         except ValueError as e:

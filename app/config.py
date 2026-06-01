@@ -16,10 +16,13 @@ class Settings(BaseSettings):
     webapp_port: int = Field(8000, alias="WEBAPP_PORT")
     webapp_init_data_ttl_seconds: int = Field(86400, alias="WEBAPP_INITDATA_TTL")
     webapp_dev_telegram_id: int | None = Field(default=None, alias="WEBAPP_DEV_TELEGRAM_ID")
+    recurring_autopost_enabled: bool = Field(True, alias="RECURRING_AUTOPOST_ENABLED")
+    recurring_autopost_interval_seconds: int = Field(3600, alias="RECURRING_AUTOPOST_INTERVAL")
 
     model_config = {
         "env_file": ".env",
-        "env_file_encoding": "utf-8",
+        # Support UTF-8 files with/without BOM (common on Windows editors)
+        "env_file_encoding": "utf-8-sig",
         "case_sensitive": False,
         "extra": "ignore",  # allow auxiliary vars like postgres_user in .env
     }

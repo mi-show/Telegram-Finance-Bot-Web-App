@@ -10,9 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/webapp/assets/styles.css" />
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="/webapp/assets/styles.css?v=20260512.4" />
   </head>
   <body class="theme-dark">
     <div class="app-bg app-bg-a"></div>
@@ -20,59 +18,58 @@
 
     <header class="topbar">
       <div>
-        <p class="eyebrow">Telegram Finance</p>
-        <h1 class="title">Personal Control Center</h1>
+        <p class="eyebrow" data-i18n="top.eyebrow">Telegram Finance</p>
+        <h1 class="title" data-i18n="top.title">Personal Control Center</h1>
       </div>
-      <button class="ghost-btn" id="refreshAllBtn" type="button">Refresh</button>
+      <button class="ghost-btn" id="refreshAllBtn" type="button" data-i18n="top.refresh">Refresh</button>
     </header>
 
     <main class="content">
       <section class="period-switch" id="periodSwitch">
-        <button data-period="7d" type="button">7D</button>
-        <button data-period="30d" class="active" type="button">30D</button>
-        <button data-period="90d" type="button">90D</button>
-        <button data-period="month" type="button">Month</button>
-        <button data-period="year" type="button">Year</button>
+        <button data-period="week" type="button" data-i18n="period.week">Week</button>
+        <button data-period="month" class="active" type="button" data-i18n="period.month">Month</button>
+        <button data-period="6m" type="button" data-i18n="period.6m">6M</button>
+        <button data-period="year" type="button" data-i18n="period.year">Year</button>
       </section>
 
       <section id="page-dashboard" class="page active">
         <div class="cards-grid">
           <article class="metric-card">
-            <p>Balance</p>
+            <p data-i18n="dashboard.balance">Balance</p>
             <h3 id="cardBalance">0.00</h3>
           </article>
           <article class="metric-card">
-            <p>Income</p>
+            <p data-i18n="dashboard.income">Income</p>
             <h3 id="cardIncome">0.00</h3>
           </article>
           <article class="metric-card">
-            <p>Expense</p>
+            <p data-i18n="dashboard.expense">Expense</p>
             <h3 id="cardExpense">0.00</h3>
           </article>
           <article class="metric-card">
-            <p>Remaining</p>
+            <p data-i18n="dashboard.remaining">Remaining</p>
             <h3 id="cardRemaining">0.00</h3>
           </article>
         </div>
 
-        <div class="charts-grid">
+        <div class="charts-grid charts-grid-large">
           <article class="panel dash-block" data-block="dashboardPie">
             <div class="panel-head">
-              <h3>Expense by Categories</h3>
+              <h3 data-i18n="dashboard.expenseByCategories">Expense by Categories</h3>
             </div>
             <canvas id="categoryPie"></canvas>
           </article>
 
           <article class="panel dash-block" data-block="dashboardLine">
             <div class="panel-head">
-              <h3>Income vs Expense Trend</h3>
+              <h3 data-i18n="dashboard.incomeVsExpenseTrend">Income vs Expense Trend</h3>
             </div>
             <canvas id="trendLine"></canvas>
           </article>
 
           <article class="panel dash-block" data-block="dashboardBar">
             <div class="panel-head">
-              <h3>Category Comparison</h3>
+              <h3 data-i18n="dashboard.categoryComparison">Category Comparison</h3>
             </div>
             <canvas id="categoryBar"></canvas>
           </article>
@@ -80,7 +77,7 @@
 
         <article class="panel dash-block" data-block="dashboardRecent">
           <div class="panel-head">
-            <h3>Recent Operations</h3>
+            <h3 data-i18n="dashboard.recentOperations">Recent Operations</h3>
           </div>
           <div id="recentOperations" class="recent-list"></div>
         </article>
@@ -89,42 +86,78 @@
       <section id="page-operations" class="page">
         <article class="panel">
           <div class="panel-head">
-            <h3>Operations</h3>
+            <h3 data-i18n="operations.title">Operations</h3>
             <div class="inline-actions">
-              <button class="ghost-btn" id="exportCsvBtn" type="button">Export CSV</button>
-              <button class="ghost-btn" id="exportPdfBtn" type="button">Export PDF</button>
+              <button class="ghost-btn" id="exportCsvBtn" type="button" data-i18n="operations.exportCsv">Export CSV</button>
+              <button class="ghost-btn" id="exportPdfBtn" type="button" data-i18n="operations.exportPdf">Export PDF</button>
             </div>
           </div>
 
-          <form id="filtersForm" class="filters-form">
-            <input type="date" id="filterDateFrom" />
-            <input type="date" id="filterDateTo" />
-            <select id="filterType">
-              <option value="">Type</option>
-              <option value="income">Income</option>
-              <option value="expense">Expense</option>
-            </select>
-            <select id="filterCategory">
-              <option value="">Category</option>
-            </select>
-            <input type="number" id="filterMin" placeholder="Min" step="0.01" min="0" />
-            <input type="number" id="filterMax" placeholder="Max" step="0.01" min="0" />
-            <input type="text" id="filterQuery" placeholder="Search by text" />
-            <button class="ghost-btn" type="submit">Apply</button>
-            <button class="ghost-btn" id="resetFiltersBtn" type="button">Reset</button>
-          </form>
+          <div class="create-operation">
+            <h4 data-i18n="operations.newOperation">New Operation</h4>
+            <form id="createRecordForm" class="create-form">
+              <select id="createType" required>
+                <option value="expense" data-i18n="filters.expense">Expense</option>
+                <option value="income" data-i18n="filters.income">Income</option>
+              </select>
+              <select id="createCategory" required>
+                <option value="" data-i18n="filters.chooseCategory">Choose Category</option>
+              </select>
+              <select id="createSubcategory">
+                <option value="" data-i18n="filters.chooseSubcategory">Choose Subcategory</option>
+              </select>
+              <input type="number" id="createAmount" min="0.01" step="0.01" placeholder="Amount" data-i18n-placeholder="modal.amount" required />
+              <input type="date" id="createDate" required />
+              <input
+                type="text"
+                id="createDescription"
+                maxlength="255"
+                placeholder="Description"
+                data-i18n-placeholder="modal.description"
+                required
+              />
+              <button class="ghost-btn" id="createRecordBtn" type="submit" data-i18n="operations.create">Create</button>
+            </form>
+          </div>
+
+          <div class="create-operation">
+            <h4 data-i18n="operations.filtersTitle">Operations Filter</h4>
+            <form id="filtersForm" class="filters-form">
+              <label class="filters-field">
+                <span data-i18n="budget.start">Start</span>
+                <input type="date" id="filterDateFrom" />
+              </label>
+              <label class="filters-field">
+                <span data-i18n="budget.end">End</span>
+                <input type="date" id="filterDateTo" />
+              </label>
+              <select id="filterType">
+                <option value="" data-i18n="filters.type">Type</option>
+                <option value="income" data-i18n="filters.income">Income</option>
+                <option value="expense" data-i18n="filters.expense">Expense</option>
+              </select>
+              <select id="filterCategory">
+                <option value="" data-i18n="filters.category">Category</option>
+              </select>
+              <input type="number" id="filterMin" placeholder="Min" data-i18n-placeholder="filters.min" step="0.01" min="0" />
+              <input type="number" id="filterMax" placeholder="Max" data-i18n-placeholder="filters.max" step="0.01" min="0" />
+              <input type="text" id="filterQuery" placeholder="Search by text" data-i18n-placeholder="filters.search" />
+              <button class="ghost-btn" type="submit" data-i18n="filters.apply">Apply</button>
+              <button class="ghost-btn" id="resetFiltersBtn" type="button" data-i18n="filters.reset">Reset</button>
+            </form>
+          </div>
 
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Date</th>
-                  <th>Description</th>
-                  <th>Category</th>
-                  <th>Type</th>
-                  <th>Amount</th>
-                  <th>Source</th>
-                  <th>Actions</th>
+                  <th data-i18n="table.date">Date</th>
+                  <th data-i18n="table.description">Description</th>
+                  <th data-i18n="table.category">Category</th>
+                  <th data-i18n="table.type">Type</th>
+                  <th data-i18n="table.amount">Amount</th>
+                  <th data-i18n="table.source">Source</th>
+                  <th data-i18n="table.actions">Actions</th>
                 </tr>
               </thead>
               <tbody id="recordsBody"></tbody>
@@ -132,7 +165,7 @@
           </div>
 
           <div class="centered">
-            <button class="ghost-btn" id="loadMoreRecordsBtn" type="button">Load More</button>
+            <button class="ghost-btn" id="loadMoreRecordsBtn" type="button" data-i18n="operations.loadMore">Load More</button>
           </div>
         </article>
       </section>
@@ -140,57 +173,113 @@
       <section id="page-analytics" class="page">
         <div class="cards-grid compact">
           <article class="metric-card">
-            <p>Day Expense</p>
+            <p data-i18n="analytics.dayExpense">Day Expense</p>
             <h3 id="analyticsDayExpense">0.00</h3>
           </article>
           <article class="metric-card">
-            <p>Week Expense</p>
+            <p data-i18n="analytics.weekExpense">Week Expense</p>
             <h3 id="analyticsWeekExpense">0.00</h3>
           </article>
           <article class="metric-card">
-            <p>Month Expense</p>
+            <p data-i18n="analytics.monthExpense">Month Expense</p>
             <h3 id="analyticsMonthExpense">0.00</h3>
           </article>
           <article class="metric-card">
-            <p>Average Expense</p>
+            <p data-i18n="analytics.averageExpense">Average Expense</p>
             <h3 id="analyticsAvgExpense">0.00</h3>
           </article>
           <article class="metric-card">
-            <p>Max Expense</p>
+            <p data-i18n="analytics.maxExpense">Max Expense</p>
             <h3 id="analyticsMaxExpense">0.00</h3>
           </article>
           <article class="metric-card">
-            <p>Forecast Next Month</p>
+            <p data-i18n="analytics.forecastNextMonth">Forecast Next Month</p>
             <h3 id="analyticsForecast">0.00</h3>
           </article>
         </div>
 
-        <div class="charts-grid">
+        <article class="panel analytics-range-panel">
+          <div class="panel-head">
+            <h3 data-i18n="analytics.periodAnalysis">Period Analysis</h3>
+          </div>
+          <form id="analyticsRangeForm" class="inline-form analytics-range-form">
+            <label class="filters-field">
+              <span data-i18n="analytics.rangeFrom">From</span>
+              <input type="date" id="analyticsDateFrom" />
+            </label>
+            <label class="filters-field">
+              <span data-i18n="analytics.rangeTo">To</span>
+              <input type="date" id="analyticsDateTo" />
+            </label>
+            <button class="ghost-btn" id="analyticsRangeApplyBtn" type="submit" data-i18n="analytics.applyRange">Apply</button>
+            <button class="ghost-btn" id="analyticsRangeResetBtn" type="button" data-i18n="analytics.clearRange">Reset</button>
+            <button class="ghost-btn" id="analyticsPrevMonthBtn" type="button" data-i18n="analytics.prevMonth">Prev Month</button>
+            <button class="ghost-btn" id="analyticsNextMonthBtn" type="button" data-i18n="analytics.nextMonth">Next Month</button>
+          </form>
+          <div id="analyticsRangeCaption" class="status-text compact"></div>
+        </article>
+
+        <div class="charts-grid charts-grid-large">
           <article class="panel">
             <div class="panel-head">
-              <h3>Monthly Comparison</h3>
+              <h3 data-i18n="analytics.distribution">Distribution by Category</h3>
             </div>
-            <canvas id="analyticsMonthly"></canvas>
+            <canvas id="analyticsDistribution"></canvas>
           </article>
 
           <article class="panel">
             <div class="panel-head">
-              <h3>Distribution</h3>
+              <h3 data-i18n="analytics.subcategoryDistribution">Subcategory Breakdown</h3>
             </div>
-            <canvas id="analyticsDistribution"></canvas>
+            <p id="analyticsSubcategoryHint" class="status-text compact"></p>
+            <canvas id="analyticsSubcategory"></canvas>
+          </article>
+
+          <article class="panel panel-wide">
+            <div class="panel-head">
+              <h3 data-i18n="analytics.monthlyComparison">Monthly Comparison</h3>
+            </div>
+            <canvas id="analyticsMonthly"></canvas>
+          </article>
+        </div>
+
+        <div class="charts-grid">
+          <article class="panel dash-block" data-block="budgetOverview">
+            <div class="panel-head">
+              <h3 data-i18n="analytics.budgetOverview">Budget Overview</h3>
+            </div>
+            <div id="budgetOverview" class="budget-overview">
+              <div class="budget-kpis">
+                <article class="budget-kpi">
+                  <p data-i18n="analytics.budgetPlanned">Planned</p>
+                  <h3 id="budgetPlanned">0.00</h3>
+                </article>
+                <article class="budget-kpi">
+                  <p data-i18n="analytics.budgetSpent">Spent</p>
+                  <h3 id="budgetSpent">0.00</h3>
+                </article>
+                <article class="budget-kpi">
+                  <p data-i18n="analytics.budgetRemaining">Remaining</p>
+                  <h3 id="budgetRemaining">0.00</h3>
+                </article>
+                <article class="budget-kpi">
+                  <p data-i18n="analytics.budgetUsed">Used %</p>
+                  <h3 id="budgetUsed">0%</h3>
+                </article>
+              </div>
+              <div id="budgetPeriodCaption" class="budget-period-caption"></div>
+              <div class="budget-chart">
+                <canvas id="budgetPlanChart"></canvas>
+              </div>
+              <div id="limitsProgress" class="budget-limits"></div>
+              <div id="budgetRecommendations" class="budget-recommendations"></div>
+            </div>
           </article>
         </div>
 
         <article class="panel">
           <div class="panel-head">
-            <h3>Spending Heatmap</h3>
-          </div>
-          <div id="analyticsHeatmap" class="heatmap-grid"></div>
-        </article>
-
-        <article class="panel">
-          <div class="panel-head">
-            <h3>Recommendations</h3>
+            <h3 data-i18n="analytics.recommendations">Recommendations</h3>
           </div>
           <ul id="recommendationsList" class="tips-list"></ul>
         </article>
@@ -199,52 +288,64 @@
       <section id="page-budget" class="page">
         <article class="panel">
           <div class="panel-head">
-            <h3>Monthly Budget</h3>
+            <h3 data-i18n="budget.monthlyBudget">Monthly Budget</h3>
           </div>
 
           <form id="budgetPlanForm" class="grid-form">
             <label>
-              Start
+              <span data-i18n="budget.start">Start</span>
               <input type="date" id="budgetStart" required />
             </label>
             <label>
-              End
+              <span data-i18n="budget.end">End</span>
               <input type="date" id="budgetEnd" required />
             </label>
             <label>
-              Planned Expense
+              <span data-i18n="budget.plannedExpense">Planned Expense</span>
               <input type="number" id="budgetExpense" min="0" step="0.01" required />
             </label>
             <label>
-              Planned Income
+              <span data-i18n="budget.plannedIncome">Planned Income</span>
               <input type="number" id="budgetIncome" min="0" step="0.01" required />
             </label>
-            <button class="ghost-btn" type="submit">Save Plan</button>
+            <button class="ghost-btn" type="submit" data-i18n="budget.savePlan">Save Plan</button>
           </form>
 
           <div id="budgetPlanStatus" class="status-text"></div>
+          <div id="selectedBudgetCard" class="status-text" style="margin-top:8px"></div>
         </article>
 
         <article class="panel">
           <div class="panel-head">
-            <h3>Category Limits</h3>
+            <h3 data-i18n="budget.categoryLimits">Category Limits</h3>
           </div>
 
           <div class="inline-form">
             <select id="limitCategory"></select>
-            <input type="number" id="limitAmount" min="0" step="0.01" placeholder="Limit" />
-            <button class="ghost-btn" id="addLimitBtn" type="button">Add</button>
+            <select id="limitSubcategory">
+              <option value="" data-i18n="filters.chooseSubcategory">Choose Subcategory</option>
+            </select>
+            <input type="number" id="limitAmount" min="0" step="0.01" placeholder="Limit" data-i18n-placeholder="budget.limit" />
+            <select id="limitAlertMode">
+              <option value="threshold_70" data-i18n="budget.limitAlertThreshold70">Notify from 70%</option>
+              <option value="threshold_50" data-i18n="budget.limitAlertThreshold50">Notify from 50%</option>
+              <option value="always" data-i18n="budget.limitAlertAlways">Always notify</option>
+              <option value="custom" data-i18n="budget.limitAlertCustom">Custom threshold</option>
+            </select>
+            <input type="number" id="limitAlertCustomPercent" min="1" max="100" value="70" style="width:80px;display:none;margin-left:6px" placeholder="%" />
+            <button class="ghost-btn" id="addLimitBtn" type="button" data-i18n="budget.add">Add</button>
           </div>
 
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Category</th>
-                  <th>Limit</th>
-                  <th>Spent</th>
-                  <th>Remaining</th>
-                  <th>Status</th>
+                  <th data-i18n="table.category">Category</th>
+                  <th data-i18n="table.limit">Limit</th>
+                  <th data-i18n="table.spent">Spent</th>
+                  <th data-i18n="table.remaining">Remaining</th>
+                  <th data-i18n="table.forecast">Forecast</th>
+                  <th data-i18n="table.status">Status</th>
                   <th></th>
                 </tr>
               </thead>
@@ -253,7 +354,72 @@
           </div>
 
           <div class="centered">
-            <button class="ghost-btn" id="saveLimitsBtn" type="button">Save Limits</button>
+            <button class="ghost-btn" id="saveLimitsBtn" type="button" data-i18n="budget.saveLimits">Save Limits</button>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h3 data-i18n="budget.recurringTitle">Recurring Items</h3>
+            <button class="ghost-btn" id="reloadRecurringBtn" type="button" data-i18n="top.refresh">Refresh</button>
+          </div>
+
+          <form id="recurringForm" class="grid-form recurring-form">
+            <label>
+              <span data-i18n="budget.recurringName">Name</span>
+              <input type="text" id="recurringTitle" maxlength="128" required />
+            </label>
+            <label>
+              <span data-i18n="budget.recurringType">Type</span>
+              <select id="recurringType" required>
+                <option value="income" data-i18n="filters.income">Income</option>
+                <option value="expense" data-i18n="filters.expense">Expense</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="budget.recurringCategory">Category</span>
+              <select id="recurringCategory" required></select>
+            </label>
+            <label>
+              <span data-i18n="budget.recurringSubcategory">Subcategory</span>
+              <select id="recurringSubcategory">
+                <option value="" data-i18n="filters.chooseSubcategory">Choose Subcategory</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="budget.recurringAmount">Amount</span>
+              <input type="number" id="recurringAmount" min="0.01" step="0.01" required />
+            </label>
+            <label>
+              <span data-i18n="budget.recurringDay">Day of month</span>
+              <input type="number" id="recurringDay" min="1" max="31" required />
+            </label>
+            <label>
+              <span data-i18n="budget.recurringReminder">Reminder days before</span>
+              <input type="number" id="recurringReminderDays" min="0" max="15" value="2" required />
+            </label>
+            <label class="checkbox-line">
+              <input type="checkbox" id="recurringActive" checked />
+              <span data-i18n="budget.recurringActive">Active</span>
+            </label>
+            <button class="ghost-btn" type="submit" data-i18n="budget.addRecurring">Add recurring</button>
+          </form>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-i18n="table.description">Description</th>
+                  <th data-i18n="table.type">Type</th>
+                  <th data-i18n="table.category">Category</th>
+                  <th data-i18n="table.amount">Amount</th>
+                  <th data-i18n="budget.recurringDue">Due</th>
+                  <th data-i18n="table.status">Status</th>
+                  <th data-i18n="table.actions">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="recurringBody"></tbody>
+            </table>
           </div>
         </article>
       </section>
@@ -261,68 +427,150 @@
       <section id="page-settings" class="page">
         <article class="panel">
           <div class="panel-head">
-            <h3>Settings</h3>
+            <h3 data-i18n="settings.title">Settings</h3>
           </div>
 
           <form id="settingsForm" class="grid-form">
             <label>
-              Theme
+              <span data-i18n="settings.theme">Theme</span>
               <select id="settingTheme">
-                <option value="dark">Dark</option>
-                <option value="light">Light</option>
+                <option value="dark" data-i18n="settings.themeDark">Dark</option>
+                <option value="light" data-i18n="settings.themeLight">Light</option>
               </select>
             </label>
             <label>
-              Currency
-              <input type="text" id="settingCurrency" maxlength="8" />
+              <span data-i18n="settings.currency">Currency</span>
+              <select id="settingCurrency">
+                <option value="UAH">UAH</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+              </select>
             </label>
             <label>
-              Interface Language
+              <span data-i18n="settings.interfaceLanguage">Interface Language</span>
               <select id="settingLanguage">
-                <option value="uk">Ukrainian</option>
-                <option value="ru">Russian</option>
-                <option value="en">English</option>
-              </select>
-            </label>
-            <label>
-              Week Starts On
-              <select id="settingWeekStart">
-                <option value="monday">Monday</option>
-                <option value="sunday">Sunday</option>
+                <option value="uk" data-i18n="settings.langUk">Ukrainian</option>
+                <option value="ru" data-i18n="settings.langRu">Russian</option>
+                <option value="en" data-i18n="settings.langEn">English</option>
               </select>
             </label>
             <label class="checkbox-line">
               <input type="checkbox" id="settingNotifications" />
-              Enable Notifications
+              <span data-i18n="settings.notifications">Enable Notifications</span>
             </label>
             <label>
-              Hidden Dashboard Blocks (comma-separated)
-              <input type="text" id="settingHiddenBlocks" placeholder="dashboardPie,dashboardLine" />
+              <span data-i18n="settings.budgetWarning">Budget warning %</span>
+              <input type="number" id="settingBudgetWarning" min="50" max="100" step="1" />
             </label>
             <label>
-              Pinned Filters (comma-separated)
-              <input type="text" id="settingPinnedFilters" />
+              <span data-i18n="settings.budgetDanger">Budget danger %</span>
+              <input type="number" id="settingBudgetDanger" min="60" max="150" step="1" />
             </label>
-            <label>
-              Favorite Categories (comma-separated)
-              <input type="text" id="settingFavoriteCategories" />
+            <label class="checkbox-line">
+              <input type="checkbox" id="settingFullscreen" />
+              <span data-i18n="settings.fullscreen">Fullscreen</span>
             </label>
-            <button class="ghost-btn" type="submit">Save Settings</button>
+            <button class="ghost-btn" type="submit" data-i18n="settings.save">Save Settings</button>
           </form>
         </article>
       </section>
     </main>
 
     <nav class="bottom-nav">
-      <button type="button" class="active" data-page="dashboard">Dashboard</button>
-      <button type="button" data-page="operations">Operations</button>
-      <button type="button" data-page="analytics">Analytics</button>
-      <button type="button" data-page="budget">Budget</button>
-      <button type="button" data-page="settings">Settings</button>
+      <button type="button" class="active" data-page="dashboard" data-i18n="nav.dashboard">Dashboard</button>
+      <button type="button" data-page="operations" data-i18n="nav.operations">Operations</button>
+      <button type="button" data-page="analytics" data-i18n="nav.analytics">Analytics</button>
+      <button type="button" data-page="budget" data-i18n="nav.budget">Budget</button>
+      <button type="button" data-page="settings" data-i18n="nav.settings">Settings</button>
     </nav>
+
+    <div class="modal-backdrop" id="recordEditModal" hidden>
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="recordEditTitle">
+        <div class="panel-head">
+          <h3 id="recordEditTitle" data-i18n="modal.editTitle">Edit Record</h3>
+        </div>
+
+        <form id="recordEditForm" class="modal-form">
+          <label>
+            <span data-i18n="modal.category">Category</span>
+            <select id="modalCategory" required></select>
+          </label>
+
+          <label>
+            <span data-i18n="modal.subcategory">Subcategory</span>
+            <select id="modalSubcategory">
+              <option value="" data-i18n="filters.chooseSubcategory">Choose Subcategory</option>
+            </select>
+          </label>
+
+          <label>
+            <span data-i18n="modal.type">Type</span>
+            <select id="modalType" required>
+              <option value="income" data-i18n="filters.income">Income</option>
+              <option value="expense" data-i18n="filters.expense">Expense</option>
+            </select>
+          </label>
+
+          <label>
+            <span data-i18n="modal.amount">Amount</span>
+            <input type="number" id="modalAmount" min="0.01" step="0.01" required />
+          </label>
+
+          <label>
+            <span data-i18n="modal.date">Date</span>
+            <input type="date" id="modalDate" required />
+          </label>
+
+          <label>
+            <span data-i18n="modal.description">Description</span>
+            <textarea id="modalDescription" rows="3" maxlength="255" required></textarea>
+          </label>
+
+          <div class="modal-actions">
+            <button class="ghost-btn" id="recordEditCancelBtn" type="button" data-i18n="modal.cancel">Cancel</button>
+            <button class="ghost-btn modal-primary-btn" type="submit" data-i18n="modal.save">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="recordDeleteModal" hidden>
+      <div class="modal-card modal-card-compact" role="dialog" aria-modal="true" aria-labelledby="recordDeleteTitle">
+        <div class="panel-head">
+          <h3 id="recordDeleteTitle" data-i18n="modal.deleteTitle">Delete Record</h3>
+        </div>
+        <p id="recordDeleteMessage" class="status-text" data-i18n="modal.deleteQuestion">Delete this record?</p>
+        <div class="modal-actions">
+          <button class="ghost-btn" id="recordDeleteCancelBtn" type="button" data-i18n="modal.cancel">Cancel</button>
+          <button class="ghost-btn modal-danger-btn" id="recordDeleteConfirmBtn" type="button" data-i18n="modal.delete">Delete</button>
+        </div>
+      </div>
+    </div>
 
     <div class="toast" id="toast"></div>
 
-    <script src="/webapp/assets/app.js" defer></script>
+    <script src="/webapp/assets/vendor/telegram/webview_chunks/chunk-01.js?v=20260417-telegram-chunks-2" defer></script>
+    <script src="/webapp/assets/vendor/telegram/webview.js?v=20260417-telegram-chunks-2" defer></script>
+    <script src="/webapp/assets/vendor/telegram/webapp_chunks/chunk-01.js?v=20260417-telegram-chunks-2" defer></script>
+    <script src="/webapp/assets/vendor/telegram/webapp_chunks/chunk-02.js?v=20260417-telegram-chunks-2" defer></script>
+    <script src="/webapp/assets/vendor/telegram/webapp_chunks/chunk-03.js?v=20260417-telegram-chunks-2" defer></script>
+    <script src="/webapp/assets/vendor/telegram/webapp.js?v=20260417-telegram-chunks-2" defer></script>
+    <script src="/webapp/assets/vendor/chart/factory_chunks/chunk-01.js?v=4.4.7-chunks-1" defer></script>
+    <script src="/webapp/assets/vendor/chart/factory_chunks/chunk-02.js?v=4.4.7-chunks-1" defer></script>
+    <script src="/webapp/assets/vendor/chart/factory_chunks/chunk-03.js?v=4.4.7-chunks-1" defer></script>
+    <script src="/webapp/assets/vendor/chart/factory_chunks/chunk-04.js?v=4.4.7-chunks-1" defer></script>
+    <script src="/webapp/assets/vendor/chart/chart-factory.min.js?v=4.4.7-chunks-1" defer></script>
+    <script src="/webapp/assets/vendor/chart/chart-wrapper.min.js?v=4.4.7-chunks-1" defer></script>
+    <script src="/webapp/assets/app/core.js?v=20260512.4" defer></script>
+    <script src="/webapp/assets/app/adapters/telegram-adapter.js?v=20260420.3" defer></script>
+    <script src="/webapp/assets/app/adapters/chart-adapter.js?v=20260414" defer></script>
+    <script src="/webapp/assets/app/dashboard.js?v=20260420.20" defer></script>
+    <script src="/webapp/assets/app/budget.js?v=20260512.5" defer></script>
+    <script src="/webapp/assets/app/records.js?v=20260420.3" defer></script>
+    <script src="/webapp/assets/app/listeners/common.js?v=20260512.1" defer></script>
+    <script src="/webapp/assets/app/listeners/records.js?v=20260420.2" defer></script>
+    <script src="/webapp/assets/app/listeners/budget.js?v=20260512.4" defer></script>
+    <script src="/webapp/assets/app/listeners/settings.js?v=20260420.3" defer></script>
+    <script src="/webapp/assets/app.js?v=20260427" defer></script>
   </body>
 </html>

@@ -1,3 +1,2 @@
-from .app import app
+"""Web package for the FastAPI app and shared web helpers."""
 
-__all__ = ["app"]

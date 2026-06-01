@@ -49,27 +49,34 @@ class RecordRepository:
             )
         return query
 
-    async def add_record(self, telegram_id: int, data: RecordCreate) -> Record:
+    async def add_record(
+        self,
+        telegram_id: int,
+        data: RecordCreate,
+        *,
+        allow_duplicate: bool = False,
+    ) -> Record:
         user = await self._get_or_create_user(telegram_id)
 
         # Duplicate check: same date + category + amount (ignoring subcategory for flexibility)
-        existing = await self.session.execute(
-            select(Record).where(
-                Record.user_id == user.id,
-                Record.happened_on == data.happened_on,
-                Record.category == data.category,
-                Record.amount == data.amount,
-                Record.type == RecordType(data.type),
+        if not allow_duplicate:
+            existing = await self.session.execute(
+                select(Record).where(
+                    Record.user_id == user.id,
+                    Record.happened_on == data.happened_on,
+                    Record.category == data.category,
+                    Record.amount == data.amount,
+                    Record.type == RecordType(data.type),
+                )
             )
-        )
-        if existing.scalars().first():
-            logger.warning(
-                f"Duplicate record detected for user_id={user.id}: "
-                f"{data.type} {data.category}/{data.subcategory} {data.amount} on {data.happened_on}"
-            )
-            raise ValueError(
-                "Запись с такой датой, категорией и суммой уже существует 🔁"
-            )
+            if existing.scalars().first():
+                logger.warning(
+                    f"Duplicate record detected for user_id={user.id}: "
+                    f"{data.type} {data.category}/{data.subcategory} {data.amount} on {data.happened_on}"
+                )
+                raise ValueError(
+                    "Запись с такой датой, категорией и суммой уже существует 🔁"
+                )
 
         record = Record(
             user_id=user.id,
@@ -146,15 +153,13 @@ class RecordRepository:
         return record
 
     async def delete_record(self, telegram_id: int, record_id: int) -> bool:
-        stmt = (
-            delete(Record)
-            .where(
-                Record.id == record_id,
-                Record.user_id == select(User.id).where(User.telegram_id == telegram_id).scalar_subquery(),
-            )
-        )
-        result = await self.session.execute(stmt)
-        return (result.rowcount or 0) > 0
+        record = await self.get_record(telegram_id, record_id)
+        if not record:
+            return False
+
+        await self.session.delete(record)
+        await self.session.flush()
+        return True
 
     async def aggregate_by_label(
         self,

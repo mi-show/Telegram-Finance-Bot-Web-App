@@ -126,6 +126,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/start_bot_with_tunne
 ## Тести
 
 ```bash
+pip install -r requirements-dev.txt
 pytest tests/
 ```
 

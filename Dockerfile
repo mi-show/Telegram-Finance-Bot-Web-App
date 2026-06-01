@@ -1,4 +1,4 @@
-FROM cgr.dev/chainguard/python:latest-dev@sha256:d2e8bdfbb6ecf99f6098226254e2787f6bb138e3485894c4f9cb5970fed52586 AS base
+FROM cgr.dev/chainguard/python:latest-dev@sha256:24fe6b9d7a18c27ffecd56bb69212bd3c7106bb789f8e5ab6b10f1246d9b27ad AS base
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1

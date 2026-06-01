@@ -1,0 +1,43 @@
+name: Keyword Sanity Check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  sanity-check:
+    name: Validate Keyword Dictionaries
+    runs-on: ubuntu-latest
+    env:
+      BOT_TOKEN: "123456:CI_TEST_TOKEN"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run seed sanity check (strict)
+        run: |
+          python -m app.scripts.sanity_check_seed_keywords --fail-on-warnings --max-errors 100 --max-warnings 100
+
+      - name: Run keyword smoke tests
+        run: |
+          python -m pytest -q \
+            tests/test_keyword_utils.py \
+            tests/test_seed_sanity_check.py \
+            tests/test_seed_reseed_integration.py \
+            tests/test_category_service.py
+

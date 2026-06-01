@@ -1,0 +1,1322 @@
+{
+  "version": "1.1.0",
+  "generated_at": "2026-04-13",
+  "groups": [
+    "normal",
+    "low_light",
+    "heavy_noise",
+    "rotated",
+    "mixed_languages",
+    "nonstandard_format"
+  ],
+  "cases": [
+    {
+      "id": "normal_01",
+      "group": "normal",
+      "raw_ocr": "Сільпо 1\nМандарин Пакистан 1гат. 0,820 X 32,99 = 27,05 A\nПакет п/е 40x60 зі святковою с 1,45 A\nБанан 1гат 0,724 X 21,99 = 15,92 A\nСума 44,42\nГРОШІ 54,42",
+      "expected": {
+        "amount": "44.42",
+        "merchant_contains": "Сільпо",
+        "min_items": 3,
+        "item_tokens": [
+          "Мандарин",
+          "Банан",
+          "Пакет"
+        ],
+        "cleanup_contains": [
+          "27,05",
+          "Сума 44,42"
+        ]
+      }
+    },
+    {
+      "id": "low_light_01",
+      "group": "low_light",
+      "raw_ocr": "АТБ 1\n@@Майонез 350 г 13,90 A\n***Яблуко 1,245 X 21,99 = 27,38 A\nВсього 41,28\nКартка 41,28",
+      "expected": {
+        "amount": "41.28",
+        "merchant_contains": "АТБ 1",
+        "min_items": 2,
+        "item_tokens": [
+          "Майонез",
+          "Яблуко"
+        ],
+        "cleanup_contains": [
+          "27,38",
+          "Всього 41,28"
+        ]
+      }
+    },
+    {
+      "id": "heavy_noise_01",
+      "group": "heavy_noise",
+      "raw_ocr": "Сiльпо ### 1\n%%%Кава Лате 1,000 X 79,00 = 79,00 A\n!!!Круасан сирний 45,00 A\nСумма 124,00\nНал 200,00 | Сдача 76,00",
+      "expected": {
+        "amount": "124.00",
+        "merchant_contains": "Сiльпо",
+        "min_items": 2,
+        "item_tokens": [
+          "Кава",
+          "Круасан"
+        ],
+        "cleanup_contains": [
+          "79,00",
+          "Сумма 124,00"
+        ]
+      }
+    },
+    {
+      "id": "rotated_01",
+      "group": "rotated",
+      "raw_ocr": "MARKET PLACE 1\nApple 1,000 x 2,49 = 2,49 A\nBread 1,99 A\nTotal 4,48\nCash 5,00 Change 0,52",
+      "expected": {
+        "amount": "4.48",
+        "merchant_contains": "MARKET",
+        "min_items": 2,
+        "item_tokens": [
+          "Apple",
+          "Bread"
+        ],
+        "cleanup_contains": [
+          "Total 4,48",
+          "Total 4,48"
+        ]
+      }
+    },
+    {
+      "id": "mixed_languages_01",
+      "group": "mixed_languages",
+      "raw_ocr": "FOOD Маркет 1\nCheese Сир 18,40 A\nMilk Молоко 11,60 A\nИтого 30,00\nCard 30,00",
+      "expected": {
+        "amount": "30.00",
+        "merchant_contains": "FOOD М",
+        "min_items": 2,
+        "item_tokens": [
+          "Cheese",
+          "Milk"
+        ],
+        "cleanup_contains": [
+          "Итого 30,00",
+          "Итого 30,00"
+        ]
+      }
+    },
+    {
+      "id": "nonstandard_format_01",
+      "group": "nonstandard_format",
+      "raw_ocr": "ЕКО Маркет 1\nМандарин Пакистан 1гат.\n0,820 X 32,99 = 27,05 A\nЙогурт полуничний 9,90 A\nСума 36,95\nКартка 36,95",
+      "expected": {
+        "amount": "36.95",
+        "merchant_contains": "ЕКО",
+        "min_items": 2,
+        "item_tokens": [
+          "Мандарин",
+          "Йогурт"
+        ],
+        "cleanup_contains": [
+          "27,05",
+          "Сума 36,95"
+        ]
+      }
+    },
+    {
+      "id": "normal_02",
+      "group": "normal",
+      "raw_ocr": "Сільпо 2\nМандарин Пакистан 1гат. 0,820 X 32,99 = 27,06 A\nПакет п/е 40x60 зі святковою с 1,46 A\nБанан 1гат 0,724 X 21,99 = 15,93 A\nСума 44,45\nГРОШІ 54,45",
+      "expected": {
+        "amount": "44.45",
+        "merchant_contains": "Сільпо",
+        "min_items": 3,
+        "item_tokens": [
+          "Мандарин",
+          "Банан",
+          "Пакет"
+        ],
+        "cleanup_contains": [
+          "27,06",
+          "Сума 44,45"
+        ]
+      }
+    },
+    {
+      "id": "low_light_02",
+      "group": "low_light",
+      "raw_ocr": "АТБ 2\n@@Майонез 350 г 13,91 A\n***Яблуко 1,245 X 21,99 = 27,39 A\nВсього 41,30\nКартка 41,30",
+      "expected": {
+        "amount": "41.30",
+        "merchant_contains": "АТБ 2",
+        "min_items": 2,
+        "item_tokens": [
+          "Майонез",
+          "Яблуко"
+        ],
+        "cleanup_contains": [
+          "27,39",
+          "Всього 41,30"
+        ]
+      }
+    },
+    {
+      "id": "heavy_noise_02",
+      "group": "heavy_noise",
+      "raw_ocr": "Сiльпо ### 2\n%%%Кава Лате 1,000 X 79,00 = 79,01 A\n!!!Круасан сирний 45,01 A\nСумма 124,02\nНал 200,02 | Сдача 76,00",
+      "expected": {
+        "amount": "124.02",
+        "merchant_contains": "Сiльпо",
+        "min_items": 2,
+        "item_tokens": [
+          "Кава",
+          "Круасан"
+        ],
+        "cleanup_contains": [
+          "79,01",
+          "Сумма 124,02"
+        ]
+      }
+    },
+    {
+      "id": "rotated_02",
+      "group": "rotated",
+      "raw_ocr": "MARKET PLACE 2\nApple 1,000 x 2,49 = 2,50 A\nBread 2,00 A\nTotal 4,50\nCash 5,02 Change 0,52",
+      "expected": {
+        "amount": "4.50",
+        "merchant_contains": "MARKET",
+        "min_items": 2,
+        "item_tokens": [
+          "Apple",
+          "Bread"
+        ],
+        "cleanup_contains": [
+          "Total 4,50",
+          "Total 4,50"
+        ]
+      }
+    },
+    {
+      "id": "mixed_languages_02",
+      "group": "mixed_languages",
+      "raw_ocr": "FOOD Маркет 2\nCheese Сир 18,41 A\nMilk Молоко 11,61 A\nИтого 30,02\nCard 30,02",
+      "expected": {
+        "amount": "30.02",
+        "merchant_contains": "FOOD М",
+        "min_items": 2,
+        "item_tokens": [
+          "Cheese",
+          "Milk"
+        ],
+        "cleanup_contains": [
+          "Итого 30,02",
+          "Итого 30,02"
+        ]
+      }
+    },
+    {
+      "id": "nonstandard_format_02",
+      "group": "nonstandard_format",
+      "raw_ocr": "ЕКО Маркет 2\nМандарин Пакистан 1гат.\n0,820 X 32,99 = 27,06 A\nЙогурт полуничний 9,91 A\nСума 36,97\nКартка 36,97",
+      "expected": {
+        "amount": "36.97",
+        "merchant_contains": "ЕКО",
+        "min_items": 2,
+        "item_tokens": [
+          "Мандарин",
+          "Йогурт"
+        ],
+        "cleanup_contains": [
+          "27,06",
+          "Сума 36,97"
+        ]
+      }
+    },
+    {
+      "id": "normal_03",
+      "group": "normal",
+      "raw_ocr": "Сільпо 3\nМандарин Пакистан 1гат. 0,820 X 32,99 = 27,07 A\nПакет п/е 40x60 зі святковою с 1,47 A\nБанан 1гат 0,724 X 21,99 = 15,94 A\nСума 44,48\nГРОШІ 54,48",
+      "expected": {
+        "amount": "44.48",
+        "merchant_contains": "Сільпо",
+        "min_items": 3,
+        "item_tokens": [
+          "Мандарин",
+          "Банан",
+          "Пакет"
+        ],
+        "cleanup_contains": [
+          "27,07",
+          "Сума 44,48"
+        ]
+      }
+    },
+    {
+      "id": "low_light_03",
+      "group": "low_light",
+      "raw_ocr": "АТБ 3\n@@Майонез 350 г 13,92 A\n***Яблуко 1,245 X 21,99 = 27,40 A\nВсього 41,32\nКартка 41,32",
+      "expected": {
+        "amount": "41.32",
+        "merchant_contains": "АТБ 3",
+        "min_items": 2,
+        "item_tokens": [
+          "Майонез",
+          "Яблуко"
+        ],
+        "cleanup_contains": [
+          "27,40",
+          "Всього 41,32"
+        ]
+      }
+    },
+    {
+      "id": "heavy_noise_03",
+      "group": "heavy_noise",
+      "raw_ocr": "Сiльпо ### 3\n%%%Кава Лате 1,000 X 79,00 = 79,02 A\n!!!Круасан сирний 45,02 A\nСумма 124,04\nНал 200,04 | Сдача 76,00",
+      "expected": {
+        "amount": "124.04",
+        "merchant_contains": "Сiльпо",
+        "min_items": 2,
+        "item_tokens": [
+          "Кава",
+          "Круасан"
+        ],
+        "cleanup_contains": [
+          "79,02",
+          "Сумма 124,04"
+        ]
+      }
+    },
+    {
+      "id": "rotated_03",
+      "group": "rotated",
+      "raw_ocr": "MARKET PLACE 3\nApple 1,000 x 2,49 = 2,51 A\nBread 2,01 A\nTotal 4,52\nCash 5,04 Change 0,52",
+      "expected": {
+        "amount": "4.52",
+        "merchant_contains": "MARKET",
+        "min_items": 2,
+        "item_tokens": [
+          "Apple",
+          "Bread"
+        ],
+        "cleanup_contains": [
+          "Total 4,52",
+          "Total 4,52"
+        ]
+      }
+    },
+    {
+      "id": "mixed_languages_03",
+      "group": "mixed_languages",
+      "raw_ocr": "FOOD Маркет 3\nCheese Сир 18,42 A\nMilk Молоко 11,62 A\nИтого 30,04\nCard 30,04",
+      "expected": {
+        "amount": "30.04",
+        "merchant_contains": "FOOD М",
+        "min_items": 2,
+        "item_tokens": [
+          "Cheese",
+          "Milk"
+        ],
+        "cleanup_contains": [
+          "Итого 30,04",
+          "Итого 30,04"
+        ]
+      }
+    },
+    {
+      "id": "nonstandard_format_03",
+      "group": "nonstandard_format",
+      "raw_ocr": "ЕКО Маркет 3\nМандарин Пакистан 1гат.\n0,820 X 32,99 = 27,07 A\nЙогурт полуничний 9,92 A\nСума 36,99\nКартка 36,99",
+      "expected": {
+        "amount": "36.99",
+        "merchant_contains": "ЕКО",
+        "min_items": 2,
+        "item_tokens": [
+          "Мандарин",
+          "Йогурт"
+        ],
+        "cleanup_contains": [
+          "27,07",
+          "Сума 36,99"
+        ]
+      }
+    },
+    {
+      "id": "normal_04",
+      "group": "normal",
+      "raw_ocr": "Сільпо 4\nМандарин Пакистан 1гат. 0,820 X 32,99 = 27,08 A\nПакет п/е 40x60 зі святковою с 1,48 A\nБанан 1гат 0,724 X 21,99 = 15,95 A\nСума 44,51\nГРОШІ 54,51",
+      "expected": {
+        "amount": "44.51",
+        "merchant_contains": "Сільпо",
+        "min_items": 3,
+        "item_tokens": [
+          "Мандарин",
+          "Банан",
+          "Пакет"
+        ],
+        "cleanup_contains": [
+          "27,08",
+          "Сума 44,51"
+        ]
+      }
+    },
+    {
+      "id": "low_light_04",
+      "group": "low_light",
+      "raw_ocr": "АТБ 4\n@@Майонез 350 г 13,93 A\n***Яблуко 1,245 X 21,99 = 27,41 A\nВсього 41,34\nКартка 41,34",
+      "expected": {
+        "amount": "41.34",
+        "merchant_contains": "АТБ 4",
+        "min_items": 2,
+        "item_tokens": [
+          "Майонез",
+          "Яблуко"
+        ],
+        "cleanup_contains": [
+          "27,41",
+          "Всього 41,34"
+        ]
+      }
+    },
+    {
+      "id": "heavy_noise_04",
+      "group": "heavy_noise",
+      "raw_ocr": "Сiльпо ### 4\n%%%Кава Лате 1,000 X 79,00 = 79,03 A\n!!!Круасан сирний 45,03 A\nСумма 124,06\nНал 200,06 | Сдача 76,00",
+      "expected": {
+        "amount": "124.06",
+        "merchant_contains": "Сiльпо",
+        "min_items": 2,
+        "item_tokens": [
+          "Кава",
+          "Круасан"
+        ],
+        "cleanup_contains": [
+          "79,03",
+          "Сумма 124,06"
+        ]
+      }
+    },
+    {
+      "id": "rotated_04",
+      "group": "rotated",
+      "raw_ocr": "MARKET PLACE 4\nApple 1,000 x 2,49 = 2,52 A\nBread 2,02 A\nTotal 4,54\nCash 5,06 Change 0,52",
+      "expected": {
+        "amount": "4.54",
+        "merchant_contains": "MARKET",
+        "min_items": 2,
+        "item_tokens": [
+          "Apple",
+          "Bread"
+        ],
+        "cleanup_contains": [
+          "Total 4,54",
+          "Total 4,54"
+        ]
+      }
+    },
+    {
+      "id": "mixed_languages_04",
+      "group": "mixed_languages",
+      "raw_ocr": "FOOD Маркет 4\nCheese Сир 18,43 A\nMilk Молоко 11,63 A\nИтого 30,06\nCard 30,06",
+      "expected": {
+        "amount": "30.06",
+        "merchant_contains": "FOOD М",
+        "min_items": 2,
+        "item_tokens": [
+          "Cheese",
+          "Milk"
+        ],
+        "cleanup_contains": [
+          "Итого 30,06",
+          "Итого 30,06"
+        ]
+      }
+    },
+    {
+      "id": "nonstandard_format_04",
+      "group": "nonstandard_format",
+      "raw_ocr": "ЕКО Маркет 4\nМандарин Пакистан 1гат.\n0,820 X 32,99 = 27,08 A\nЙогурт полуничний 9,93 A\nСума 37,01\nКартка 37,01",
+      "expected": {
+        "amount": "37.01",
+        "merchant_contains": "ЕКО",
+        "min_items": 2,
+        "item_tokens": [
+          "Мандарин",
+          "Йогурт"
+        ],
+        "cleanup_contains": [
+          "27,08",
+          "Сума 37,01"
+        ]
+      }
+    },
+    {
+      "id": "normal_05",
+      "group": "normal",
+      "raw_ocr": "Сільпо 5\nМандарин Пакистан 1гат. 0,820 X 32,99 = 27,09 A\nПакет п/е 40x60 зі святковою с 1,49 A\nБанан 1гат 0,724 X 21,99 = 15,96 A\nСума 44,54\nГРОШІ 54,54",
+      "expected": {
+        "amount": "44.54",
+        "merchant_contains": "Сільпо",
+        "min_items": 3,
+        "item_tokens": [
+          "Мандарин",
+          "Банан",
+          "Пакет"
+        ],
+        "cleanup_contains": [
+          "27,09",
+          "Сума 44,54"
+        ]
+      }
+    },
+    {
+      "id": "low_light_05",
+      "group": "low_light",
+      "raw_ocr": "АТБ 5\n@@Майонез 350 г 13,94 A\n***Яблуко 1,245 X 21,99 = 27,42 A\nВсього 41,36\nКартка 41,36",
+      "expected": {
+        "amount": "41.36",
+        "merchant_contains": "АТБ 5",
+        "min_items": 2,
+        "item_tokens": [
+          "Майонез",
+          "Яблуко"
+        ],
+        "cleanup_contains": [
+          "27,42",
+          "Всього 41,36"
+        ]
+      }
+    },
+    {
+      "id": "heavy_noise_05",
+      "group": "heavy_noise",
+      "raw_ocr": "Сiльпо ### 5\n%%%Кава Лате 1,000 X 79,00 = 79,04 A\n!!!Круасан сирний 45,04 A\nСумма 124,08\nНал 200,08 | Сдача 76,00",
+      "expected": {
+        "amount": "124.08",
+        "merchant_contains": "Сiльпо",
+        "min_items": 2,
+        "item_tokens": [
+          "Кава",
+          "Круасан"
+        ],
+        "cleanup_contains": [
+          "79,04",
+          "Сумма 124,08"
+        ]
+      }
+    },
+    {
+      "id": "rotated_05",
+      "group": "rotated",
+      "raw_ocr": "MARKET PLACE 5\nApple 1,000 x 2,49 = 2,53 A\nBread 2,03 A\nTotal 4,56\nCash 5,08 Change 0,52",
+      "expected": {
+        "amount": "4.56",
+        "merchant_contains": "MARKET",
+        "min_items": 2,
+        "item_tokens": [
+          "Apple",
+          "Bread"
+        ],
+        "cleanup_contains": [
+          "Total 4,56",
+          "Total 4,56"
+        ]
+      }
+    },
+    {
+      "id": "mixed_languages_05",
+      "group": "mixed_languages",
+      "raw_ocr": "FOOD Маркет 5\nCheese Сир 18,44 A\nMilk Молоко 11,64 A\nИтого 30,08\nCard 30,08",
+      "expected": {
+        "amount": "30.08",
+        "merchant_contains": "FOOD М",
+        "min_items": 2,
+        "item_tokens": [
+          "Cheese",
+          "Milk"
+        ],
+        "cleanup_contains": [
+          "Итого 30,08",
+          "Итого 30,08"
+        ]
+      }
+    },
+    {
+      "id": "nonstandard_format_05",
+      "group": "nonstandard_format",
+      "raw_ocr": "ЕКО Маркет 5\nМандарин Пакистан 1гат.\n0,820 X 32,99 = 27,09 A\nЙогурт полуничний 9,94 A\nСума 37,03\nКартка 37,03",
+      "expected": {
+        "amount": "37.03",
+        "merchant_contains": "ЕКО",
+        "min_items": 2,
+        "item_tokens": [
+          "Мандарин",
+          "Йогурт"
+        ],
+        "cleanup_contains": [
+          "27,09",
+          "Сума 37,03"
+        ]
+      }
+    },
+    {
+      "id": "normal_06",
+      "group": "normal",
+      "raw_ocr": "Сільпо 6\nМандарин Пакистан 1гат. 0,820 X 32,99 = 27,10 A\nПакет п/е 40x60 зі святковою с 1,50 A\nБанан 1гат 0,724 X 21,99 = 15,97 A\nСума 44,57\nГРОШІ 54,57",
+      "expected": {
+        "amount": "44.57",
+        "merchant_contains": "Сільпо",
+        "min_items": 3,
+        "item_tokens": [
+          "Мандарин",
+          "Банан",
+          "Пакет"
+        ],
+        "cleanup_contains": [
+          "27,10",
+          "Сума 44,57"
+        ]
+      }
+    },
+    {
+      "id": "low_light_06",
+      "group": "low_light",
+      "raw_ocr": "АТБ 6\n@@Майонез 350 г 13,95 A\n***Яблуко 1,245 X 21,99 = 27,43 A\nВсього 41,38\nКартка 41,38",
+      "expected": {
+        "amount": "41.38",
+        "merchant_contains": "АТБ 6",
+        "min_items": 2,
+        "item_tokens": [
+          "Майонез",
+          "Яблуко"
+        ],
+        "cleanup_contains": [
+          "27,43",
+          "Всього 41,38"
+        ]
+      }
+    },
+    {
+      "id": "heavy_noise_06",
+      "group": "heavy_noise",
+      "raw_ocr": "Сiльпо ### 6\n%%%Кава Лате 1,000 X 79,00 = 79,05 A\n!!!Круасан сирний 45,05 A\nСумма 124,10\nНал 200,10 | Сдача 76,00",
+      "expected": {
+        "amount": "124.10",
+        "merchant_contains": "Сiльпо",
+        "min_items": 2,
+        "item_tokens": [
+          "Кава",
+          "Круасан"
+        ],
+        "cleanup_contains": [
+          "79,05",
+          "Сумма 124,10"
+        ]
+      }
+    },
+    {
+      "id": "rotated_06",
+      "group": "rotated",
+      "raw_ocr": "MARKET PLACE 6\nApple 1,000 x 2,49 = 2,54 A\nBread 2,04 A\nTotal 4,58\nCash 5,10 Change 0,52",
+      "expected": {
+        "amount": "4.58",
+        "merchant_contains": "MARKET",
+        "min_items": 2,
+        "item_tokens": [
+          "Apple",
+          "Bread"
+        ],
+        "cleanup_contains": [
+          "Total 4,58",
+          "Total 4,58"
+        ]
+      }
+    },
+    {
+      "id": "mixed_languages_06",
+      "group": "mixed_languages",
+      "raw_ocr": "FOOD Маркет 6\nCheese Сир 18,45 A\nMilk Молоко 11,65 A\nИтого 30,10\nCard 30,10",
+      "expected": {
+        "amount": "30.10",
+        "merchant_contains": "FOOD М",
+        "min_items": 2,
+        "item_tokens": [
+          "Cheese",
+          "Milk"
+        ],
+        "cleanup_contains": [
+          "Итого 30,10",
+          "Итого 30,10"
+        ]
+      }
+    },
+    {
+      "id": "nonstandard_format_06",
+      "group": "nonstandard_format",
+      "raw_ocr": "ЕКО Маркет 6\nМандарин Пакистан 1гат.\n0,820 X 32,99 = 27,10 A\nЙогурт полуничний 9,95 A\nСума 37,05\nКартка 37,05",
+      "expected": {
+        "amount": "37.05",
+        "merchant_contains": "ЕКО",
+        "min_items": 2,
+        "item_tokens": [
+          "Мандарин",
+          "Йогурт"
+        ],
+        "cleanup_contains": [
+          "27,10",
+          "Сума 37,05"
+        ]
+      }
+    },
+    {
+      "id": "normal_07",
+      "group": "normal",
+      "raw_ocr": "Сільпо 7\nМандарин Пакистан 1гат. 0,820 X 32,99 = 27,11 A\nПакет п/е 40x60 зі святковою с 1,51 A\nБанан 1гат 0,724 X 21,99 = 15,98 A\nСума 44,60\nГРОШІ 54,60",
+      "expected": {
+        "amount": "44.60",
+        "merchant_contains": "Сільпо",
+        "min_items": 3,
+        "item_tokens": [
+          "Мандарин",
+          "Банан",
+          "Пакет"
+        ],
+        "cleanup_contains": [
+          "27,11",
+          "Сума 44,60"
+        ]
+      }
+    },
+    {
+      "id": "low_light_07",
+      "group": "low_light",
+      "raw_ocr": "АТБ 7\n@@Майонез 350 г 13,96 A\n***Яблуко 1,245 X 21,99 = 27,44 A\nВсього 41,40\nКартка 41,40",
+      "expected": {
+        "amount": "41.40",
+        "merchant_contains": "АТБ 7",
+        "min_items": 2,
+        "item_tokens": [
+          "Майонез",
+          "Яблуко"
+        ],
+        "cleanup_contains": [
+          "27,44",
+          "Всього 41,40"
+        ]
+      }
+    },
+    {
+      "id": "heavy_noise_07",
+      "group": "heavy_noise",
+      "raw_ocr": "Сiльпо ### 7\n%%%Кава Лате 1,000 X 79,00 = 79,06 A\n!!!Круасан сирний 45,06 A\nСумма 124,12\nНал 200,12 | Сдача 76,00",
+      "expected": {
+        "amount": "124.12",
+        "merchant_contains": "Сiльпо",
+        "min_items": 2,
+        "item_tokens": [
+          "Кава",
+          "Круасан"
+        ],
+        "cleanup_contains": [
+          "79,06",
+          "Сумма 124,12"
+        ]
+      }
+    },
+    {
+      "id": "rotated_07",
+      "group": "rotated",
+      "raw_ocr": "MARKET PLACE 7\nApple 1,000 x 2,49 = 2,55 A\nBread 2,05 A\nTotal 4,60\nCash 5,12 Change 0,52",
+      "expected": {
+        "amount": "4.60",
+        "merchant_contains": "MARKET",
+        "min_items": 2,
+        "item_tokens": [
+          "Apple",
+          "Bread"
+        ],
+        "cleanup_contains": [
+          "Total 4,60",
+          "Total 4,60"
+        ]
+      }
+    },
+    {
+      "id": "mixed_languages_07",
+      "group": "mixed_languages",
+      "raw_ocr": "FOOD Маркет 7\nCheese Сир 18,46 A\nMilk Молоко 11,66 A\nИтого 30,12\nCard 30,12",
+      "expected": {
+        "amount": "30.12",
+        "merchant_contains": "FOOD М",
+        "min_items": 2,
+        "item_tokens": [
+          "Cheese",
+          "Milk"
+        ],
+        "cleanup_contains": [
+          "Итого 30,12",
+          "Итого 30,12"
+        ]
+      }
+    },
+    {
+      "id": "nonstandard_format_07",
+      "group": "nonstandard_format",
+      "raw_ocr": "ЕКО Маркет 7\nМандарин Пакистан 1гат.\n0,820 X 32,99 = 27,11 A\nЙогурт полуничний 9,96 A\nСума 37,07\nКартка 37,07",
+      "expected": {
+        "amount": "37.07",
+        "merchant_contains": "ЕКО",
+        "min_items": 2,
+        "item_tokens": [
+          "Мандарин",
+          "Йогурт"
+        ],
+        "cleanup_contains": [
+          "27,11",
+          "Сума 37,07"
+        ]
+      }
+    },
+    {
+      "id": "normal_08",
+      "group": "normal",
+      "raw_ocr": "Сільпо 8\nМандарин Пакистан 1гат. 0,820 X 32,99 = 27,12 A\nПакет п/е 40x60 зі святковою с 1,52 A\nБанан 1гат 0,724 X 21,99 = 15,99 A\nСума 44,63\nГРОШІ 54,63",
+      "expected": {
+        "amount": "44.63",
+        "merchant_contains": "Сільпо",
+        "min_items": 3,
+        "item_tokens": [
+          "Мандарин",
+          "Банан",
+          "Пакет"
+        ],
+        "cleanup_contains": [
+          "27,12",
+          "Сума 44,63"
+        ]
+      }
+    },
+    {
+      "id": "low_light_08",
+      "group": "low_light",
+      "raw_ocr": "АТБ 8\n@@Майонез 350 г 13,97 A\n***Яблуко 1,245 X 21,99 = 27,45 A\nВсього 41,42\nКартка 41,42",
+      "expected": {
+        "amount": "41.42",
+        "merchant_contains": "АТБ 8",
+        "min_items": 2,
+        "item_tokens": [
+          "Майонез",
+          "Яблуко"
+        ],
+        "cleanup_contains": [
+          "27,45",
+          "Всього 41,42"
+        ]
+      }
+    },
+    {
+      "id": "heavy_noise_08",
+      "group": "heavy_noise",
+      "raw_ocr": "Сiльпо ### 8\n%%%Кава Лате 1,000 X 79,00 = 79,07 A\n!!!Круасан сирний 45,07 A\nСумма 124,14\nНал 200,14 | Сдача 76,00",
+      "expected": {
+        "amount": "124.14",
+        "merchant_contains": "Сiльпо",
+        "min_items": 2,
+        "item_tokens": [
+          "Кава",
+          "Круасан"
+        ],
+        "cleanup_contains": [
+          "79,07",
+          "Сумма 124,14"
+        ]
+      }
+    },
+    {
+      "id": "rotated_08",
+      "group": "rotated",
+      "raw_ocr": "MARKET PLACE 8\nApple 1,000 x 2,49 = 2,56 A\nBread 2,06 A\nTotal 4,62\nCash 5,14 Change 0,52",
+      "expected": {
+        "amount": "4.62",
+        "merchant_contains": "MARKET",
+        "min_items": 2,
+        "item_tokens": [
+          "Apple",
+          "Bread"
+        ],
+        "cleanup_contains": [
+          "Total 4,62",
+          "Total 4,62"
+        ]
+      }
+    },
+    {
+      "id": "mixed_languages_08",
+      "group": "mixed_languages",
+      "raw_ocr": "FOOD Маркет 8\nCheese Сир 18,47 A\nMilk Молоко 11,67 A\nИтого 30,14\nCard 30,14",
+      "expected": {
+        "amount": "30.14",
+        "merchant_contains": "FOOD М",
+        "min_items": 2,
+        "item_tokens": [
+          "Cheese",
+          "Milk"
+        ],
+        "cleanup_contains": [
+          "Итого 30,14",
+          "Итого 30,14"
+        ]
+      }
+    },
+    {
+      "id": "nonstandard_format_08",
+      "group": "nonstandard_format",
+      "raw_ocr": "ЕКО Маркет 8\nМандарин Пакистан 1гат.\n0,820 X 32,99 = 27,12 A\nЙогурт полуничний 9,97 A\nСума 37,09\nКартка 37,09",
+      "expected": {
+        "amount": "37.09",
+        "merchant_contains": "ЕКО",
+        "min_items": 2,
+        "item_tokens": [
+          "Мандарин",
+          "Йогурт"
+        ],
+        "cleanup_contains": [
+          "27,12",
+          "Сума 37,09"
+        ]
+      }
+    },
+    {
+      "id": "normal_09",
+      "group": "normal",
+      "raw_ocr": "Сільпо 9\nМандарин Пакистан 1гат. 0,820 X 32,99 = 27,13 A\nПакет п/е 40x60 зі святковою с 1,53 A\nБанан 1гат 0,724 X 21,99 = 16,00 A\nСума 44,66\nГРОШІ 54,66",
+      "expected": {
+        "amount": "44.66",
+        "merchant_contains": "Сільпо",
+        "min_items": 3,
+        "item_tokens": [
+          "Мандарин",
+          "Банан",
+          "Пакет"
+        ],
+        "cleanup_contains": [
+          "27,13",
+          "Сума 44,66"
+        ]
+      }
+    },
+    {
+      "id": "low_light_09",
+      "group": "low_light",
+      "raw_ocr": "АТБ 9\n@@Майонез 350 г 13,98 A\n***Яблуко 1,245 X 21,99 = 27,46 A\nВсього 41,44\nКартка 41,44",
+      "expected": {
+        "amount": "41.44",
+        "merchant_contains": "АТБ 9",
+        "min_items": 2,
+        "item_tokens": [
+          "Майонез",
+          "Яблуко"
+        ],
+        "cleanup_contains": [
+          "27,46",
+          "Всього 41,44"
+        ]
+      }
+    },
+    {
+      "id": "heavy_noise_09",
+      "group": "heavy_noise",
+      "raw_ocr": "Сiльпо ### 9\n%%%Кава Лате 1,000 X 79,00 = 79,08 A\n!!!Круасан сирний 45,08 A\nСумма 124,16\nНал 200,16 | Сдача 76,00",
+      "expected": {
+        "amount": "124.16",
+        "merchant_contains": "Сiльпо",
+        "min_items": 2,
+        "item_tokens": [
+          "Кава",
+          "Круасан"
+        ],
+        "cleanup_contains": [
+          "79,08",
+          "Сумма 124,16"
+        ]
+      }
+    },
+    {
+      "id": "rotated_09",
+      "group": "rotated",
+      "raw_ocr": "MARKET PLACE 9\nApple 1,000 x 2,49 = 2,57 A\nBread 2,07 A\nTotal 4,64\nCash 5,16 Change 0,52",
+      "expected": {
+        "amount": "4.64",
+        "merchant_contains": "MARKET",
+        "min_items": 2,
+        "item_tokens": [
+          "Apple",
+          "Bread"
+        ],
+        "cleanup_contains": [
+          "Total 4,64",
+          "Total 4,64"
+        ]
+      }
+    },
+    {
+      "id": "mixed_languages_09",
+      "group": "mixed_languages",
+      "raw_ocr": "FOOD Маркет 9\nCheese Сир 18,48 A\nMilk Молоко 11,68 A\nИтого 30,16\nCard 30,16",
+      "expected": {
+        "amount": "30.16",
+        "merchant_contains": "FOOD М",
+        "min_items": 2,
+        "item_tokens": [
+          "Cheese",
+          "Milk"
+        ],
+        "cleanup_contains": [
+          "Итого 30,16",
+          "Итого 30,16"
+        ]
+      }
+    },
+    {
+      "id": "nonstandard_format_09",
+      "group": "nonstandard_format",
+      "raw_ocr": "ЕКО Маркет 9\nМандарин Пакистан 1гат.\n0,820 X 32,99 = 27,13 A\nЙогурт полуничний 9,98 A\nСума 37,11\nКартка 37,11",
+      "expected": {
+        "amount": "37.11",
+        "merchant_contains": "ЕКО",
+        "min_items": 2,
+        "item_tokens": [
+          "Мандарин",
+          "Йогурт"
+        ],
+        "cleanup_contains": [
+          "27,13",
+          "Сума 37,11"
+        ]
+      }
+    },
+    {
+      "id": "normal_10",
+      "group": "normal",
+      "raw_ocr": "Сільпо 10\nМандарин Пакистан 1гат. 0,820 X 32,99 = 27,14 A\nПакет п/е 40x60 зі святковою с 1,54 A\nБанан 1гат 0,724 X 21,99 = 16,01 A\nСума 44,69\nГРОШІ 54,69",
+      "expected": {
+        "amount": "44.69",
+        "merchant_contains": "Сільпо",
+        "min_items": 3,
+        "item_tokens": [
+          "Мандарин",
+          "Банан",
+          "Пакет"
+        ],
+        "cleanup_contains": [
+          "27,14",
+          "Сума 44,69"
+        ]
+      }
+    },
+    {
+      "id": "low_light_10",
+      "group": "low_light",
+      "raw_ocr": "АТБ 10\n@@Майонез 350 г 13,99 A\n***Яблуко 1,245 X 21,99 = 27,47 A\nВсього 41,46\nКартка 41,46",
+      "expected": {
+        "amount": "41.46",
+        "merchant_contains": "АТБ 10",
+        "min_items": 2,
+        "item_tokens": [
+          "Майонез",
+          "Яблуко"
+        ],
+        "cleanup_contains": [
+          "27,47",
+          "Всього 41,46"
+        ]
+      }
+    },
+    {
+      "id": "heavy_noise_10",
+      "group": "heavy_noise",
+      "raw_ocr": "Сiльпо ### 10\n%%%Кава Лате 1,000 X 79,00 = 79,09 A\n!!!Круасан сирний 45,09 A\nСумма 124,18\nНал 200,18 | Сдача 76,00",
+      "expected": {
+        "amount": "124.18",
+        "merchant_contains": "Сiльпо",
+        "min_items": 2,
+        "item_tokens": [
+          "Кава",
+          "Круасан"
+        ],
+        "cleanup_contains": [
+          "79,09",
+          "Сумма 124,18"
+        ]
+      }
+    },
+    {
+      "id": "rotated_10",
+      "group": "rotated",
+      "raw_ocr": "MARKET PLACE 10\nApple 1,000 x 2,49 = 2,58 A\nBread 2,08 A\nTotal 4,66\nCash 5,18 Change 0,52",
+      "expected": {
+        "amount": "4.66",
+        "merchant_contains": "MARKET",
+        "min_items": 2,
+        "item_tokens": [
+          "Apple",
+          "Bread"
+        ],
+        "cleanup_contains": [
+          "Total 4,66",
+          "Total 4,66"
+        ]
+      }
+    },
+    {
+      "id": "mixed_languages_10",
+      "group": "mixed_languages",
+      "raw_ocr": "FOOD Маркет 10\nCheese Сир 18,49 A\nMilk Молоко 11,69 A\nИтого 30,18\nCard 30,18",
+      "expected": {
+        "amount": "30.18",
+        "merchant_contains": "FOOD М",
+        "min_items": 2,
+        "item_tokens": [
+          "Cheese",
+          "Milk"
+        ],
+        "cleanup_contains": [
+          "Итого 30,18",
+          "Итого 30,18"
+        ]
+      }
+    },
+    {
+      "id": "nonstandard_format_10",
+      "group": "nonstandard_format",
+      "raw_ocr": "ЕКО Маркет 10\nМандарин Пакистан 1гат.\n0,820 X 32,99 = 27,14 A\nЙогурт полуничний 9,99 A\nСума 37,13\nКартка 37,13",
+      "expected": {
+        "amount": "37.13",
+        "merchant_contains": "ЕКО",
+        "min_items": 2,
+        "item_tokens": [
+          "Мандарин",
+          "Йогурт"
+        ],
+        "cleanup_contains": [
+          "27,14",
+          "Сума 37,13"
+        ]
+      }
+    },
+    {
+      "id": "normal_11",
+      "group": "normal",
+      "raw_ocr": "Сільпо 11\nМандарин Пакистан 1гат. 0,820 X 32,99 = 27,15 A\nПакет п/е 40x60 зі святковою с 1,55 A\nБанан 1гат 0,724 X 21,99 = 16,02 A\nСума 44,72\nГРОШІ 54,72",
+      "expected": {
+        "amount": "44.72",
+        "merchant_contains": "Сільпо",
+        "min_items": 3,
+        "item_tokens": [
+          "Мандарин",
+          "Банан",
+          "Пакет"
+        ],
+        "cleanup_contains": [
+          "27,15",
+          "Сума 44,72"
+        ]
+      }
+    },
+    {
+      "id": "low_light_11",
+      "group": "low_light",
+      "raw_ocr": "АТБ 11\n@@Майонез 350 г 14,00 A\n***Яблуко 1,245 X 21,99 = 27,48 A\nВсього 41,48\nКартка 41,48",
+      "expected": {
+        "amount": "41.48",
+        "merchant_contains": "АТБ 11",
+        "min_items": 2,
+        "item_tokens": [
+          "Майонез",
+          "Яблуко"
+        ],
+        "cleanup_contains": [
+          "27,48",
+          "Всього 41,48"
+        ]
+      }
+    },
+    {
+      "id": "heavy_noise_11",
+      "group": "heavy_noise",
+      "raw_ocr": "Сiльпо ### 11\n%%%Кава Лате 1,000 X 79,00 = 79,10 A\n!!!Круасан сирний 45,10 A\nСумма 124,20\nНал 200,20 | Сдача 76,00",
+      "expected": {
+        "amount": "124.20",
+        "merchant_contains": "Сiльпо",
+        "min_items": 2,
+        "item_tokens": [
+          "Кава",
+          "Круасан"
+        ],
+        "cleanup_contains": [
+          "79,10",
+          "Сумма 124,20"
+        ]
+      }
+    },
+    {
+      "id": "rotated_11",
+      "group": "rotated",
+      "raw_ocr": "MARKET PLACE 11\nApple 1,000 x 2,49 = 2,59 A\nBread 2,09 A\nTotal 4,68\nCash 5,20 Change 0,52",
+      "expected": {
+        "amount": "4.68",
+        "merchant_contains": "MARKET",
+        "min_items": 2,
+        "item_tokens": [
+          "Apple",
+          "Bread"
+        ],
+        "cleanup_contains": [
+          "Total 4,68",
+          "Total 4,68"
+        ]
+      }
+    },
+    {
+      "id": "mixed_languages_11",
+      "group": "mixed_languages",
+      "raw_ocr": "FOOD Маркет 11\nCheese Сир 18,50 A\nMilk Молоко 11,70 A\nИтого 30,20\nCard 30,20",
+      "expected": {
+        "amount": "30.20",
+        "merchant_contains": "FOOD М",
+        "min_items": 2,
+        "item_tokens": [
+          "Cheese",
+          "Milk"
+        ],
+        "cleanup_contains": [
+          "Итого 30,20",
+          "Итого 30,20"
+        ]
+      }
+    },
+    {
+      "id": "nonstandard_format_11",
+      "group": "nonstandard_format",
+      "raw_ocr": "ЕКО Маркет 11\nМандарин Пакистан 1гат.\n0,820 X 32,99 = 27,15 A\nЙогурт полуничний 10,00 A\nСума 37,15\nКартка 37,15",
+      "expected": {
+        "amount": "37.15",
+        "merchant_contains": "ЕКО",
+        "min_items": 2,
+        "item_tokens": [
+          "Мандарин",
+          "Йогурт"
+        ],
+        "cleanup_contains": [
+          "27,15",
+          "Сума 37,15"
+        ]
+      }
+    },
+    {
+      "id": "normal_12",
+      "group": "normal",
+      "raw_ocr": "Сільпо 12\nМандарин Пакистан 1гат. 0,820 X 32,99 = 27,16 A\nПакет п/е 40x60 зі святковою с 1,56 A\nБанан 1гат 0,724 X 21,99 = 16,03 A\nСума 44,75\nГРОШІ 54,75",
+      "expected": {
+        "amount": "44.75",
+        "merchant_contains": "Сільпо",
+        "min_items": 3,
+        "item_tokens": [
+          "Мандарин",
+          "Банан",
+          "Пакет"
+        ],
+        "cleanup_contains": [
+          "27,16",
+          "Сума 44,75"
+        ]
+      }
+    },
+    {
+      "id": "low_light_12",
+      "group": "low_light",
+      "raw_ocr": "АТБ 12\n@@Майонез 350 г 14,01 A\n***Яблуко 1,245 X 21,99 = 27,49 A\nВсього 41,50\nКартка 41,50",
+      "expected": {
+        "amount": "41.50",
+        "merchant_contains": "АТБ 12",
+        "min_items": 2,
+        "item_tokens": [
+          "Майонез",
+          "Яблуко"
+        ],
+        "cleanup_contains": [
+          "27,49",
+          "Всього 41,50"
+        ]
+      }
+    },
+    {
+      "id": "heavy_noise_12",
+      "group": "heavy_noise",
+      "raw_ocr": "Сiльпо ### 12\n%%%Кава Лате 1,000 X 79,00 = 79,11 A\n!!!Круасан сирний 45,11 A\nСумма 124,22\nНал 200,22 | Сдача 76,00",
+      "expected": {
+        "amount": "124.22",
+        "merchant_contains": "Сiльпо",
+        "min_items": 2,
+        "item_tokens": [
+          "Кава",
+          "Круасан"
+        ],
+        "cleanup_contains": [
+          "79,11",
+          "Сумма 124,22"
+        ]
+      }
+    },
+    {
+      "id": "rotated_12",
+      "group": "rotated",
+      "raw_ocr": "MARKET PLACE 12\nApple 1,000 x 2,49 = 2,60 A\nBread 2,10 A\nTotal 4,70\nCash 5,22 Change 0,52",
+      "expected": {
+        "amount": "4.70",
+        "merchant_contains": "MARKET",
+        "min_items": 2,
+        "item_tokens": [
+          "Apple",
+          "Bread"
+        ],
+        "cleanup_contains": [
+          "Total 4,70",
+          "Total 4,70"
+        ]
+      }
+    },
+    {
+      "id": "mixed_languages_12",
+      "group": "mixed_languages",
+      "raw_ocr": "FOOD Маркет 12\nCheese Сир 18,51 A\nMilk Молоко 11,71 A\nИтого 30,22\nCard 30,22",
+      "expected": {
+        "amount": "30.22",
+        "merchant_contains": "FOOD М",
+        "min_items": 2,
+        "item_tokens": [
+          "Cheese",
+          "Milk"
+        ],
+        "cleanup_contains": [
+          "Итого 30,22",
+          "Итого 30,22"
+        ]
+      }
+    },
+    {
+      "id": "nonstandard_format_12",
+      "group": "nonstandard_format",
+      "raw_ocr": "ЕКО Маркет 12\nМандарин Пакистан 1гат.\n0,820 X 32,99 = 27,16 A\nЙогурт полуничний 10,01 A\nСума 37,17\nКартка 37,17",
+      "expected": {
+        "amount": "37.17",
+        "merchant_contains": "ЕКО",
+        "min_items": 2,
+        "item_tokens": [
+          "Мандарин",
+          "Йогурт"
+        ],
+        "cleanup_contains": [
+          "27,16",
+          "Сума 37,17"
+        ]
+      }
+    }
+  ]
+}

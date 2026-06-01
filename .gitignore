@@ -1,0 +1,31 @@
+# Python cache/artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Test/cache dirs
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Local runtime data
+.env
+finance.db
+data/e2e_webapp.db
+data/e2e_pytest_output.txt
+data/receipts/
+data/*.log
+
+# Playwright artifacts
+playwright-report/
+test-results/
+
+# OS/editor noise
+.vscode/
+.DS_Store
+Thumbs.db
